@@ -29,4 +29,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    function address(){
+        return $this->hasOne(Address::class);
+    }
+
+    function addresses(){
+        return $this->hasMany(Address::class);
+    }
+    function posts(){
+        return $this->hasMany(Address::class);
+    }
+
+    function image(){
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }
