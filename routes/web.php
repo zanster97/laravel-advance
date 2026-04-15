@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PostController;
+use App\Http\Middleware\CheckRoleMiddleware;
 use App\Models\Address;
 use App\Models\Country;
 use App\Models\Post;
@@ -112,3 +114,25 @@ Route::get('image', function(){
 
     // return $user->image; //for user image
 });
+//middleware in route
+// Route::get('/post',[PostController::class, 'index'])->name('post.index');
+//     Route::post('/post',[PostController::class,'store'])->name('post.store')
+//        ->middleware(CheckRoleMiddleware::class);
+
+//middleware in route group recomended
+// Route::get('/post',[PostController::class, 'index'])->name('post.index');
+// Route::group(['middleware' => CheckRoleMiddleware::class],function(){
+//     Route::post('/post',[PostController::class,'store'])->name('post.store');
+// });
+
+//middleware in controller level
+// Route::get('/post',[PostController::class, 'index'])->name('post.index'); //->middleware('test-group');
+// Route::post('/post',[PostController::class,'store'])->name('post.store')->middleware(['checkRole']); //array for  ultiple alias
+
+Route::get('user/dashboard',function(){
+    dd('user');
+})->middleware('checkRole:user'); //multiple user,test also add more param in middleware file
+
+Route::get('admin/dashboard',function(){
+    dd('admin');
+})->middleware('checkRole:admin');

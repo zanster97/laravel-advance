@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\CheckRoleMiddleware;
+use App\Http\Middleware\TestMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,7 +13,21 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // $middleware->append(TestMiddleware::class);
+        // $middleware->append(CheckRoleMiddleware::class);
+        // $middleware->appendToGroup('test-group',[
+        //     TestMiddleware::class,
+        //     CheckRoleMiddleware::class
+        // ]);
+        // $middleware->web(append:[
+        //     TestMiddleware::class,
+        //     CheckRoleMiddleware::class
+        // ]);
+        //reconmended for parameter passing also
+        $middleware->alias([
+            'checkRole' => CheckRoleMiddleware::class
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
