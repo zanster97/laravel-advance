@@ -9,15 +9,18 @@
 <body>
     <div>
         @foreach ($posts as $post)
-            <h4>{{ $post->name }}</h4>
-            <p>Author:{{ $post->user->name}}</p>
-            <p>Tags:</p>
-            <ul>
-                @foreach ($post->tags as $tag )
-                    <li>{{ $tag->name }}</li>
-                @endforeach
-            </ul>
-            <hr>
+        @can('update',$post)
+
+        <h4><a href="{{ route('post.edit', $post->id) }}">{{ $post->name }}</a></h4>
+        <p>Author:{{ $post->user->name}}</p>
+        <p>Tags:</p>
+        <ul>
+            @foreach ($post->tags as $tag )
+                <li>{{ $tag->name }}</li>
+            @endforeach
+        </ul>
+        <hr>
+        @endcan
         @endforeach
     </div>
 </body>
