@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -9,23 +10,42 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/user/dashboard', function(){
-    // $user =Auth::user();
-    // if (Auth::check()) {
-    //     dd($user);
-    // }
-    return view('user-dashboard');
-})->name('user.dashboard')->middleware('auth');
+// Route::get('/user/dashboard', function(){
+//     // $user =Auth::user();
+//     // if (Auth::check()) {
+//     //     dd($user);
+//     // }
+//     return view('user-dashboard');
+// })->name('user.dashboard')->middleware('auth');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-require __DIR__.'/auth.php';
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+// require __DIR__.'/auth.php';
 
-Route::resource('post',PostController::class)->middleware('auth');
+// Route::resource('post',PostController::class)->middleware('auth');
+
+//response
+Route::get('/post', [PostController::class, 'index'])
+// {
+    // return redirect()->route('post.create');
+    // return redirect('/post/create');
+    // return redirect()->route('post.create',['id' => 'Thair Dam']);
+    // return to_route('post.create',['id' => 'Thair Dam']);
+    // return "Post List";
+// })
+->name('post.index');
+
+// Route::get('/post/create/{id}', function($id){
+Route::get('/post/create',[PostController::class, 'create'])
+// {
+    // dd('Create');
+    // return "Post Create";
+// })
+->name('post.create');

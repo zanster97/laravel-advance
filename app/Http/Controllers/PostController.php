@@ -26,18 +26,38 @@ class PostController extends Controller //implements HasMiddleware
     function index(){
     //    return view('post.index');
     //    $posts= Post::where('user_id', Auth::user()->id)->get();
-       $posts= Post::all();
-       return view('post',compact('posts'));
+    //    $posts= Post::all();
+    //    return view('post',compact('posts'));
+    // return redirect()->action([PostController::class, 'create']);
+    // return redirect()->away('https://www.oogle.com');
+    //json res
+    // return response()->json([
+    //     'name' => 'test',
+    //     'state' => 'test'
+    // ]);
+    // return [
+    //     'name' => 'test',
+    //     'state' => 'test'
+    // ];
+    //dowload
+    // return response()->download(public_path('upload/e67eb556-f125-4e24-95ad-8aff21b9926a.jpg'));
+    return response()->file(public_path('upload/e67eb556-f125-4e24-95ad-8aff21b9926a.jpg'));
+
     }
 
     function edit(string $id){
     //    return view('post.index');
-       $posts= Post::findOrFail($id);
+    //    $posts= Post::findOrFail($id);
     //    if (! Gate::allows('update-post', $posts)) {
     //         abort(403);
     //    }
     //    Gate::authorize('update-post',$posts);
-       Gate::authorize('update',$posts); //policy
-       return view('post.edit',compact('posts'));
+    //    Gate::authorize('update',$posts); //policy
+    //    return view('post.edit',compact('posts'));
+
+    }
+
+    function create(){
+        dd('Create method');
     }
 }
